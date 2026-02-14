@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Onegram redirect</title>
+  <script>
+    (function () {
+      var path = location.pathname.replace(/\/index\.html$/, '');
+      var repoBase = path.split('/').filter(Boolean).slice(0, 1);
+      var base = '/' + (repoBase[0] ? repoBase[0] + '/' : '');
+      var tail = path.replace(base.replace(/\/$/, ''), '');
+      var target = base + '#/' + tail.replace(/^\//, '') + (location.search || '');
+      location.replace(target);
+    })();
+  </script>
+</head>
+<body></body>
+</html>
