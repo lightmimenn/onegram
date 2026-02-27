@@ -1,13 +1,1896 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Onegram</title>
-  <link rel="stylesheet" href="./css/vk2010.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onegram</title>
+<style>
+/* === VK 2010 STYLE === */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#e7e8ec;font-family:Tahoma,Arial,sans-serif;font-size:11px;color:#000;min-height:100vh;}
+a{color:#2a5885;text-decoration:none;cursor:pointer;}
+a:hover{text-decoration:underline;}
+input[type=text],input[type=password],input[type=file],textarea,select{
+  font-family:Tahoma,Arial,sans-serif;font-size:11px;border:1px solid #b6c3d6;padding:4px 6px;background:#fff;
+}
+textarea{resize:vertical;min-height:50px;}
+input:focus,textarea:focus{border-color:#6088b4;outline:none;}
+button,.btn{
+  font-family:Tahoma,Arial,sans-serif;font-size:11px;padding:4px 12px;cursor:pointer;
+  background:linear-gradient(to bottom,#6e9ecf,#4a76a8);color:#fff;border:1px solid #3d6899;
+}
+button:hover,.btn:hover{background:linear-gradient(to bottom,#5d8ec2,#3e6a9e);}
+.btn-gray{background:linear-gradient(to bottom,#f0f0f0,#d9d9d9);color:#333;border:1px solid #bbb;}
+.btn-gray:hover{background:linear-gradient(to bottom,#e6e6e6,#ccc);}
+.btn-red{background:linear-gradient(to bottom,#e06060,#c04040);border-color:#a03030;}
+.btn-green{background:linear-gradient(to bottom,#5a9e5a,#3a7e3a);border-color:#2a6e2a;}
+
+/* HEADER */
+#header{background:linear-gradient(to bottom,#5e82a8,#4a6c8c);height:36px;border-bottom:1px solid #3d5d7c;position:fixed;top:0;left:0;right:0;z-index:100;}
+#header-inner{width:960px;margin:0 auto;display:flex;align-items:center;height:36px;color:#fff;}
+#header-inner .logo{font-size:16px;font-weight:bold;color:#fff;margin-right:20px;letter-spacing:1px;}
+#header-inner .logo:hover{text-decoration:none;}
+#header-nav{display:flex;gap:12px;flex:1;}
+#header-nav a{color:#c8dae8;font-size:11px;}
+#header-nav a:hover{color:#fff;text-decoration:none;}
+#header-right{display:flex;align-items:center;gap:10px;}
+#header-right a{color:#c8dae8;font-size:11px;}
+#header-right .user-name{color:#fff;font-weight:bold;}
+
+/* LAYOUT */
+#app{width:960px;margin:0 auto;padding-top:46px;min-height:100vh;}
+.page-wrap{display:flex;gap:10px;align-items:flex-start;}
+.sidebar{width:160px;flex-shrink:0;}
+.content{flex:1;min-width:0;}
+.right-col{width:200px;flex-shrink:0;}
+
+/* SIDEBAR */
+.side-block{background:#fff;border:1px solid #dce1e6;margin-bottom:8px;}
+.side-block-title{background:#f7f8fa;padding:6px 8px;font-weight:bold;font-size:11px;color:#45688e;border-bottom:1px solid #e7e8ec;}
+.side-block ul{list-style:none;padding:4px 0;}
+.side-block li a{display:block;padding:3px 10px;color:#2a5885;font-size:11px;}
+.side-block li a:hover{background:#e1e7ed;text-decoration:none;}
+.side-block li a.active{font-weight:bold;color:#000;}
+
+/* CONTENT BOX */
+.box{background:#fff;border:1px solid #dce1e6;margin-bottom:8px;}
+.box-header{background:#f7f8fa;padding:8px 12px;font-weight:bold;font-size:12px;color:#45688e;border-bottom:1px solid #e7e8ec;}
+.box-body{padding:10px 12px;}
+.box-footer{padding:6px 12px;border-top:1px solid #e7e8ec;background:#f7f8fa;font-size:10px;color:#777;}
+
+/* FORMS */
+.form-row{margin-bottom:8px;}
+.form-row label{display:block;margin-bottom:2px;font-weight:bold;color:#555;}
+.form-row input[type=text],.form-row input[type=password],.form-row textarea{width:100%;}
+.form-error{color:#c00;font-size:10px;margin-top:2px;}
+.alert-error{background:#fdd;border:1px solid #c99;padding:6px 10px;margin-bottom:8px;color:#900;font-size:11px;}
+.alert-success{background:#dfd;border:1px solid #9c9;padding:6px 10px;margin-bottom:8px;color:#060;font-size:11px;}
+
+/* LANDING */
+.landing{text-align:center;padding:60px 20px;}
+.landing h1{font-size:36px;color:#45688e;margin-bottom:10px;}
+.landing p{font-size:13px;color:#555;margin-bottom:20px;}
+.landing-features{text-align:left;max-width:400px;margin:0 auto 20px;background:#fff;border:1px solid #dce1e6;padding:15px 20px;}
+.landing-features li{margin-bottom:6px;font-size:12px;color:#333;list-style:disc inside;}
+.landing-btns{display:flex;gap:10px;justify-content:center;}
+.landing-btns button{font-size:14px;padding:8px 24px;}
+
+/* PROFILE */
+.profile-header{display:flex;gap:12px;padding:10px;}
+.profile-avatar{width:100px;height:100px;border:1px solid #ccc;background:#f0f0f0;overflow:hidden;flex-shrink:0;}
+.profile-avatar img{width:100%;height:100%;object-fit:cover;}
+.profile-info h2{font-size:14px;margin-bottom:4px;}
+.profile-info .username{color:#777;font-size:11px;margin-bottom:6px;}
+
+/* POSTS */
+.post{border-bottom:1px solid #e7e8ec;padding:8px 0;}
+.post:last-child{border-bottom:none;}
+.post-header{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+.post-avatar{width:36px;height:36px;border-radius:0;overflow:hidden;background:#eee;flex-shrink:0;}
+.post-avatar img{width:100%;height:100%;object-fit:cover;}
+.post-author{font-weight:bold;color:#2a5885;font-size:11px;}
+.post-date{color:#999;font-size:10px;}
+.post-text{margin:4px 0;font-size:12px;line-height:1.4;white-space:pre-wrap;word-break:break-word;}
+.post-images{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0;}
+.post-images img{max-width:200px;max-height:200px;border:1px solid #ccc;cursor:pointer;}
+.post-actions{display:flex;gap:12px;margin-top:4px;font-size:10px;}
+.post-actions a{color:#2a5885;}
+.like-btn{cursor:pointer;}
+.like-btn.liked{color:#c00;font-weight:bold;}
+
+/* COMMENTS */
+.comments-section{margin-top:6px;padding-top:6px;border-top:1px solid #eee;}
+.comment{display:flex;gap:6px;margin-bottom:4px;font-size:11px;}
+.comment-author{font-weight:bold;color:#2a5885;}
+.comment-text{color:#333;}
+.comment-date{color:#999;font-size:10px;}
+.comment-form{display:flex;gap:4px;margin-top:4px;}
+.comment-form input{flex:1;font-size:10px;padding:2px 4px;}
+.comment-form button{font-size:10px;padding:2px 8px;}
+
+/* MESSAGES */
+.msg-layout{display:flex;height:500px;border-top:1px solid #e7e8ec;}
+.msg-dialogs{width:240px;border-right:1px solid #e7e8ec;overflow-y:auto;flex-shrink:0;}
+.msg-chat{flex:1;display:flex;flex-direction:column;}
+.dialog-item{padding:6px 8px;border-bottom:1px solid #eee;cursor:pointer;display:flex;gap:6px;align-items:center;}
+.dialog-item:hover{background:#e9edf1;}
+.dialog-item.active{background:#d6e4f0;}
+.dialog-item .d-avatar{width:36px;height:36px;background:#eee;overflow:hidden;flex-shrink:0;}
+.dialog-item .d-avatar img{width:100%;height:100%;object-fit:cover;}
+.dialog-item .d-info{flex:1;min-width:0;overflow:hidden;}
+.dialog-item .d-name{font-weight:bold;font-size:11px;color:#2a5885;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dialog-item .d-last{font-size:10px;color:#777;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dialog-item .d-time{font-size:9px;color:#999;}
+.dialog-item .d-unread{background:#5181b8;color:#fff;border-radius:8px;padding:1px 5px;font-size:9px;font-weight:bold;}
+
+.msg-search{padding:6px;border-bottom:1px solid #eee;}
+.msg-search input{width:100%;font-size:10px;padding:3px 5px;}
+
+.chat-header{padding:6px 10px;border-bottom:1px solid #eee;font-weight:bold;font-size:12px;color:#2a5885;background:#f7f8fa;}
+.chat-messages{flex:1;overflow-y:auto;padding:8px 10px;}
+.chat-empty{text-align:center;color:#999;padding:40px;font-size:12px;}
+
+.message{margin-bottom:8px;max-width:75%;}
+.message.mine{margin-left:auto;}
+.message .msg-bubble{padding:6px 10px;border:1px solid #d3dce6;background:#f0f4f8;font-size:11px;line-height:1.3;word-break:break-word;white-space:pre-wrap;}
+.message.mine .msg-bubble{background:#cce4ff;border-color:#a0c4e8;}
+.message .msg-meta{font-size:9px;color:#999;margin-top:1px;}
+.message.mine .msg-meta{text-align:right;}
+.message .msg-images{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px;}
+.message .msg-images img{max-width:150px;max-height:150px;border:1px solid #ccc;}
+
+.msg-reactions{display:flex;gap:3px;margin-top:2px;flex-wrap:wrap;}
+.msg-reactions .r-badge{font-size:10px;padding:1px 4px;border:1px solid #ddd;background:#f9f9f9;cursor:pointer;border-radius:2px;}
+.msg-reactions .r-badge.my{background:#d0e8ff;border-color:#80b0e0;}
+.reaction-trigger{cursor:pointer;font-size:10px;color:#999;margin-left:4px;}
+.reaction-panel{display:flex;gap:2px;background:#fff;border:1px solid #ccc;padding:3px;position:absolute;z-index:10;box-shadow:1px 1px 4px rgba(0,0,0,0.15);}
+.reaction-panel span{cursor:pointer;font-size:14px;padding:2px;}
+.reaction-panel span:hover{background:#e0e0e0;}
+.msg-reaction-row{position:relative;display:inline-block;}
+
+.chat-input{padding:6px 10px;border-top:1px solid #eee;display:flex;gap:4px;background:#f7f8fa;align-items:flex-end;}
+.chat-input textarea{flex:1;font-size:11px;padding:4px;min-height:32px;max-height:80px;}
+.chat-input .attach-btn{font-size:16px;cursor:pointer;color:#45688e;padding:4px;}
+.chat-input input[type=file]{display:none;}
+
+/* COMMUNITIES */
+.community-card{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #eee;align-items:center;}
+.community-card:last-child{border-bottom:none;}
+.community-avatar{width:50px;height:50px;background:#eee;overflow:hidden;flex-shrink:0;}
+.community-avatar img{width:100%;height:100%;object-fit:cover;}
+.community-name{font-weight:bold;color:#2a5885;font-size:11px;}
+.community-members{font-size:10px;color:#777;}
+
+/* ADMIN */
+.admin-table{width:100%;border-collapse:collapse;font-size:11px;}
+.admin-table th,.admin-table td{border:1px solid #dce1e6;padding:4px 8px;text-align:left;}
+.admin-table th{background:#f7f8fa;font-weight:bold;}
+.admin-table tr:nth-child(even){background:#fafbfc;}
+.admin-section{margin-bottom:15px;padding-bottom:15px;border-bottom:1px solid #eee;}
+.admin-section:last-child{border-bottom:none;}
+.keyword-tag{display:inline-block;background:#e1e7ed;padding:2px 6px;margin:2px;font-size:10px;border:1px solid #c0cfe0;}
+.keyword-tag .kw-remove{color:#c00;cursor:pointer;margin-left:4px;font-weight:bold;}
+
+.mini-avatar{width:36px;height:36px;overflow:hidden;background:#eee;flex-shrink:0;}
+.mini-avatar img{width:100%;height:100%;object-fit:cover;}
+.hidden{display:none!important;}
+.mt4{margin-top:4px;}.mt8{margin-top:8px;}.mb4{margin-bottom:4px;}.mb8{margin-bottom:8px;}
+.text-center{text-align:center;}.text-right{text-align:right;}
+.flex{display:flex;}.gap4{gap:4px;}.gap8{gap:8px;}.items-center{align-items:center;}
+.w100{width:100%;}
+</style>
 </head>
 <body>
-  <div id="app"></div>
-  <script type="module" src="./js/app.js"></script>
+<div id="header" class="hidden">
+  <div id="header-inner">
+    <a class="logo" href="#/">Onegram</a>
+    <div id="header-nav"></div>
+    <div id="header-right"></div>
+  </div>
+</div>
+<div id="app"></div>
+
+<script>
+// ============================================================
+// DB.js — IndexedDB wrapper
+// ============================================================
+const DB = (function(){
+  const DB_NAME = 'onegramDB';
+  const DB_VERSION = 3;
+  let db = null;
+
+  function open(){
+    return new Promise((resolve, reject) => {
+      if(db){ resolve(db); return; }
+      const req = indexedDB.open(DB_NAME, DB_VERSION);
+      req.onupgradeneeded = e => {
+        const d = e.target.result;
+        const stores = [
+          {name:'users', keyPath:'id', indexes:[{n:'username',f:'username',opts:{unique:true}}]},
+          {name:'communities', keyPath:'id', indexes:[{n:'username',f:'username',opts:{unique:true}}]},
+          {name:'communityMembers', keyPath:'id', indexes:[{n:'communityId',f:'communityId'},{n:'userId',f:'userId'}]},
+          {name:'posts', keyPath:'id', indexes:[{n:'ownerKey',f:'ownerKey'},{n:'createdAt',f:'createdAt'}]},
+          {name:'comments', keyPath:'id', indexes:[{n:'postId',f:'postId'}]},
+          {name:'dialogs', keyPath:'id', indexes:[]},
+          {name:'messages', keyPath:'id', indexes:[{n:'dialogId',f:'dialogId'},{n:'createdAt',f:'createdAt'}]},
+          {name:'images', keyPath:'id', indexes:[]},
+          {name:'moderationSettings', keyPath:'id', indexes:[]}
+        ];
+        stores.forEach(s => {
+          let store;
+          if(!d.objectStoreNames.contains(s.name)){
+            store = d.createObjectStore(s.name, {keyPath:s.keyPath});
+          } else {
+            store = e.target.transaction.objectStore(s.name);
+          }
+          s.indexes.forEach(idx => {
+            if(!store.indexNames.contains(idx.n)){
+              store.createIndex(idx.n, idx.f, idx.opts||{});
+            }
+          });
+        });
+      };
+      req.onsuccess = e => { db = e.target.result; resolve(db); };
+      req.onerror = e => reject(e.target.error);
+    });
+  }
+
+  async function tx(storeName, mode){
+    const d = await open();
+    return d.transaction(storeName, mode).objectStore(storeName);
+  }
+
+  async function put(storeName, obj){
+    const store = await tx(storeName,'readwrite');
+    return new Promise((res,rej)=>{
+      const r = store.put(obj);
+      r.onsuccess = ()=>res(obj);
+      r.onerror = e=>rej(e.target.error);
+    });
+  }
+
+  async function get(storeName, id){
+    const store = await tx(storeName,'readonly');
+    return new Promise((res,rej)=>{
+      const r = store.get(id);
+      r.onsuccess = ()=>res(r.result||null);
+      r.onerror = e=>rej(e.target.error);
+    });
+  }
+
+  async function getAll(storeName){
+    const store = await tx(storeName,'readonly');
+    return new Promise((res,rej)=>{
+      const r = store.getAll();
+      r.onsuccess = ()=>res(r.result||[]);
+      r.onerror = e=>rej(e.target.error);
+    });
+  }
+
+  async function del(storeName, id){
+    const store = await tx(storeName,'readwrite');
+    return new Promise((res,rej)=>{
+      const r = store.delete(id);
+      r.onsuccess = ()=>res();
+      r.onerror = e=>rej(e.target.error);
+    });
+  }
+
+  async function getByIndex(storeName, indexName, value){
+    const store = await tx(storeName,'readonly');
+    const idx = store.index(indexName);
+    return new Promise((res,rej)=>{
+      const r = idx.getAll(value);
+      r.onsuccess = ()=>res(r.result||[]);
+      r.onerror = e=>rej(e.target.error);
+    });
+  }
+
+  async function getOneByIndex(storeName, indexName, value){
+    const store = await tx(storeName,'readonly');
+    const idx = store.index(indexName);
+    return new Promise((res,rej)=>{
+      const r = idx.get(value);
+      r.onsuccess = ()=>res(r.result||null);
+      r.onerror = e=>rej(e.target.error);
+    });
+  }
+
+  return {open,put,get,getAll,del,getByIndex,getOneByIndex};
+})();
+
+// ============================================================
+// UTILS
+// ============================================================
+const Utils = {
+  uid(){ return Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,9); },
+
+  async sha256(str){
+    const buf = new TextEncoder().encode(str);
+    const hash = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  },
+
+  formatDate(ts){
+    if(!ts) return '';
+    const d = new Date(ts);
+    const pad = n => String(n).padStart(2,'0');
+    return `${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  },
+
+  shortDate(ts){
+    if(!ts) return '';
+    const d = new Date(ts);
+    const pad = n => String(n).padStart(2,'0');
+    return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  },
+
+  sanitize(str){
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  },
+
+  fileToResizedBase64(file, opts={}){
+    const maxW = opts.maxW || 1024;
+    const maxH = opts.maxH || 1024;
+    const mime = opts.mime || 'image/jpeg';
+    const quality = opts.quality || 0.82;
+    return new Promise((resolve, reject)=>{
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = new Image();
+        img.onload = ()=>{
+          let w = img.width, h = img.height;
+          if(w > maxW){ h = h*(maxW/w); w = maxW; }
+          if(h > maxH){ w = w*(maxH/h); h = maxH; }
+          w = Math.round(w); h = Math.round(h);
+          const c = document.createElement('canvas');
+          c.width = w; c.height = h;
+          c.getContext('2d').drawImage(img, 0, 0, w, h);
+          const dataUrl = c.toDataURL(mime, quality);
+          const b64 = dataUrl.split(',')[1];
+          resolve({base64: b64, mime, width: w, height: h});
+        };
+        img.onerror = reject;
+        img.src = e.target.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  },
+
+  imgSrc(imageObj){
+    if(!imageObj) return '';
+    return `data:${imageObj.mime};base64,${imageObj.base64}`;
+  },
+
+  usernameValid(u){
+    return /^[a-zA-Z0-9_]{3,20}$/.test(u);
+  }
+};
+
+// ============================================================
+// STORE — business logic
+// ============================================================
+const Store = {
+  ONEGRAM_USERNAME: 'onegram',
+
+  currentUserId(){ return localStorage.getItem('currentUserId'); },
+  setCurrentUser(id){ if(id) localStorage.setItem('currentUserId',id); else localStorage.removeItem('currentUserId'); },
+
+  async currentUser(){
+    const id = this.currentUserId();
+    if(!id) return null;
+    return DB.get('users', id);
+  },
+
+  async getUserByUsername(username){
+    return DB.getOneByIndex('users','username', username.toLowerCase());
+  },
+
+  async register(firstName, lastName, username, password){
+    username = username.toLowerCase().trim();
+    if(!Utils.usernameValid(username)) throw new Error('Username: 3-20 символов, латиница/цифры/_');
+    const exists = await this.getUserByUsername(username);
+    if(exists) throw new Error('Username уже занят');
+    const hash = await Utils.sha256(password);
+    const user = {
+      id: Utils.uid(),
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      username,
+      passwordHash: hash,
+      avatarImageId: null,
+      role: 'user',
+      isBlocked: false,
+      createdAt: Date.now()
+    };
+    await DB.put('users', user);
+    this.setCurrentUser(user.id);
+    return user;
+  },
+
+  async login(username, password){
+    username = username.toLowerCase().trim();
+    const user = await this.getUserByUsername(username);
+    if(!user) throw new Error('Пользователь не найден');
+    if(user.isBlocked) throw new Error('Аккаунт заблокирован');
+    const hash = await Utils.sha256(password);
+    if(user.passwordHash !== hash) throw new Error('Неверный пароль');
+    this.setCurrentUser(user.id);
+    return user;
+  },
+
+  logout(){
+    this.setCurrentUser(null);
+  },
+
+  async getImage(id){
+    if(!id) return null;
+    return DB.get('images', id);
+  },
+
+  async saveImage(file, maxW, maxH){
+    const data = await Utils.fileToResizedBase64(file, {maxW: maxW||1024, maxH: maxH||1024});
+    const img = {
+      id: Utils.uid(),
+      ownerId: this.currentUserId(),
+      mime: data.mime,
+      width: data.width,
+      height: data.height,
+      base64: data.base64,
+      createdAt: Date.now()
+    };
+    await DB.put('images', img);
+    return img;
+  },
+
+  async updateAvatar(file){
+    const img = await this.saveImage(file, 256, 256);
+    const user = await this.currentUser();
+    user.avatarImageId = img.id;
+    await DB.put('users', user);
+    return user;
+  },
+
+  async getAvatarSrc(user){
+    if(!user || !user.avatarImageId) return '';
+    const img = await this.getImage(user.avatarImageId);
+    return img ? Utils.imgSrc(img) : '';
+  },
+
+  // MODERATION
+  async getModerationSettings(){
+    let s = await DB.get('moderationSettings','global');
+    if(!s){ s = {id:'global', mode:'censor', keywords:[]}; await DB.put('moderationSettings',s); }
+    return s;
+  },
+
+  async applyModeration(text){
+    const s = await this.getModerationSettings();
+    if(!s.keywords || s.keywords.length===0) return {ok:true, text};
+    for(const kw of s.keywords){
+      const re = new RegExp(kw.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');
+      if(re.test(text)){
+        if(s.mode==='ban') return {ok:false, reason:`Сообщение содержит запрещённое слово: "${kw}"`};
+        text = text.replace(re, '***');
+      }
+    }
+    return {ok:true, text};
+  },
+
+  // DIALOGS & MESSAGES
+  async findOrCreateDialog(userAId, userBId){
+    const all = await DB.getAll('dialogs');
+    let d = all.find(x=> x.type==='dm' && ((x.userA===userAId&&x.userB===userBId)||(x.userA===userBId&&x.userB===userAId)));
+    if(!d){
+      d = {id:Utils.uid(), type:'dm', userA:userAId, userB:userBId, lastMessageAt:0};
+      await DB.put('dialogs', d);
+    }
+    return d;
+  },
+
+  async sendMessage(dialogId, fromId, toId, text, imageIds=[]){
+    const mod = await this.applyModeration(text);
+    if(!mod.ok) throw new Error(mod.reason);
+    const msg = {
+      id: Utils.uid(),
+      dialogId,
+      fromId,
+      toId,
+      text: mod.text,
+      imageIds: imageIds||[],
+      createdAt: Date.now(),
+      readAtBy: {},
+      reactions: {}
+    };
+    msg.readAtBy[fromId] = msg.createdAt;
+    await DB.put('messages', msg);
+    const dialog = await DB.get('dialogs', dialogId);
+    dialog.lastMessageAt = msg.createdAt;
+    await DB.put('dialogs', dialog);
+    return msg;
+  },
+
+  async getDialogsForUser(userId){
+    const all = await DB.getAll('dialogs');
+    return all.filter(d=>d.userA===userId||d.userB===userId).sort((a,b)=>(b.lastMessageAt||0)-(a.lastMessageAt||0));
+  },
+
+  async getMessagesForDialog(dialogId){
+    return DB.getByIndex('messages','dialogId', dialogId);
+  },
+
+  async markRead(dialogId, userId){
+    const msgs = await this.getMessagesForDialog(dialogId);
+    const now = Date.now();
+    for(const m of msgs){
+      if(!m.readAtBy) m.readAtBy = {};
+      if(!m.readAtBy[userId]){
+        m.readAtBy[userId] = now;
+        await DB.put('messages', m);
+      }
+    }
+  },
+
+  async countUnread(dialogId, userId){
+    const msgs = await this.getMessagesForDialog(dialogId);
+    return msgs.filter(m => m.toId === userId && (!m.readAtBy || !m.readAtBy[userId])).length;
+  },
+
+  async toggleReaction(messageId, userId, emoji){
+    const msg = await DB.get('messages', messageId);
+    if(!msg) return;
+    if(!msg.reactions) msg.reactions = {};
+    if(!msg.reactions[emoji]) msg.reactions[emoji] = [];
+    const idx = msg.reactions[emoji].indexOf(userId);
+    // remove user from all other reactions
+    for(const e in msg.reactions){
+      const i = msg.reactions[e].indexOf(userId);
+      if(i>=0) msg.reactions[e].splice(i,1);
+      if(msg.reactions[e].length===0) delete msg.reactions[e];
+    }
+    if(idx < 0){
+      if(!msg.reactions[emoji]) msg.reactions[emoji] = [];
+      msg.reactions[emoji].push(userId);
+    }
+    await DB.put('messages', msg);
+    return msg;
+  },
+
+  // BROADCAST from Onegram
+  async broadcastMessage(text){
+    const og = await this.getUserByUsername(this.ONEGRAM_USERNAME);
+    if(!og) throw new Error('Onegram account not found');
+    const mod = await this.applyModeration(text);
+    if(!mod.ok) throw new Error(mod.reason);
+    const users = await DB.getAll('users');
+    let count = 0;
+    for(const u of users){
+      if(u.id===og.id) continue;
+      if(u.isBlocked) continue;
+      const d = await this.findOrCreateDialog(og.id, u.id);
+      const msg = {
+        id: Utils.uid(), dialogId: d.id, fromId: og.id, toId: u.id,
+        text: mod.text, imageIds:[], createdAt: Date.now(),
+        readAtBy:{}, reactions:{}
+      };
+      msg.readAtBy[og.id] = msg.createdAt;
+      await DB.put('messages', msg);
+      d.lastMessageAt = msg.createdAt;
+      await DB.put('dialogs', d);
+      count++;
+    }
+    return count;
+  },
+
+  // POSTS
+  async createPost(authorType, authorId, ownerType, ownerId, text, imageIds=[]){
+    const mod = await this.applyModeration(text);
+    if(!mod.ok) throw new Error(mod.reason);
+    const post = {
+      id: Utils.uid(),
+      authorType, authorId,
+      ownerType, ownerId,
+      ownerKey: ownerType+'_'+ownerId,
+      text: mod.text,
+      imageIds: imageIds||[],
+      likes:[],
+      createdAt: Date.now()
+    };
+    await DB.put('posts', post);
+    return post;
+  },
+
+  async getPostsForOwner(ownerType, ownerId){
+    return DB.getByIndex('posts','ownerKey', ownerType+'_'+ownerId);
+  },
+
+  async getAllPosts(){
+    return DB.getAll('posts');
+  },
+
+  async toggleLike(postId, userId){
+    const p = await DB.get('posts', postId);
+    if(!p) return;
+    if(!p.likes) p.likes=[];
+    const idx = p.likes.indexOf(userId);
+    if(idx>=0) p.likes.splice(idx,1); else p.likes.push(userId);
+    await DB.put('posts',p);
+    return p;
+  },
+
+  async addComment(postId, authorId, text){
+    const mod = await this.applyModeration(text);
+    if(!mod.ok) throw new Error(mod.reason);
+    const c = {id:Utils.uid(), postId, authorId, text:mod.text, createdAt:Date.now()};
+    await DB.put('comments', c);
+    return c;
+  },
+
+  async getComments(postId){
+    return DB.getByIndex('comments','postId', postId);
+  },
+
+  // COMMUNITIES
+  async createCommunity(name, username, avatarFile){
+    username = username.toLowerCase().trim();
+    if(!Utils.usernameValid(username)) throw new Error('Username сообщества: 3-20 символов, латиница/цифры/_');
+    const exists = await DB.getOneByIndex('communities','username', username);
+    if(exists) throw new Error('Username сообщества уже занят');
+    let avatarImageId = null;
+    if(avatarFile){
+      const img = await this.saveImage(avatarFile, 256, 256);
+      avatarImageId = img.id;
+    }
+    const uid = this.currentUserId();
+    const comm = {
+      id: Utils.uid(), name: name.trim(), username,
+      avatarImageId, ownerId: uid, isBlocked:false, createdAt:Date.now()
+    };
+    await DB.put('communities', comm);
+    const membership = {id:Utils.uid(), communityId:comm.id, userId:uid, role:'owner', createdAt:Date.now()};
+    await DB.put('communityMembers', membership);
+    return comm;
+  },
+
+  async getCommunityByUsername(username){
+    return DB.getOneByIndex('communities','username', username.toLowerCase());
+  },
+
+  async getUserCommunities(userId){
+    const memberships = await DB.getByIndex('communityMembers','userId', userId);
+    const comms = [];
+    for(const m of memberships){
+      const c = await DB.get('communities', m.communityId);
+      if(c) comms.push(c);
+    }
+    return comms;
+  },
+
+  async isMember(communityId, userId){
+    const ms = await DB.getByIndex('communityMembers','communityId', communityId);
+    return ms.some(m=>m.userId===userId);
+  },
+
+  async joinCommunity(communityId, userId){
+    const already = await this.isMember(communityId, userId);
+    if(already) return;
+    const m = {id:Utils.uid(), communityId, userId, role:'member', createdAt:Date.now()};
+    await DB.put('communityMembers', m);
+  },
+
+  async leaveCommunity(communityId, userId){
+    const ms = await DB.getByIndex('communityMembers','communityId', communityId);
+    const m = ms.find(x=>x.userId===userId);
+    if(m) await DB.del('communityMembers', m.id);
+  },
+
+  async getCommunityMembersCount(communityId){
+    const ms = await DB.getByIndex('communityMembers','communityId', communityId);
+    return ms.length;
+  },
+
+  // Feed scoring
+  async getFeed(userId){
+    const allPosts = await this.getAllPosts();
+    const now = Date.now();
+    const scored = allPosts.map(p=>{
+      const age = (now - p.createdAt)/3600000; // hours
+      const freshness = Math.exp(-age/48);
+      const likeScore = Math.log2(1+(p.likes?p.likes.length:0));
+      const ownPenalty = p.authorId===userId ? 0.5 : 1;
+      const score = (freshness * 10 + likeScore * 2) * ownPenalty;
+      return {...p, score};
+    });
+    scored.sort((a,b)=>b.score-a.score);
+    return scored;
+  }
+};
+
+// ============================================================
+// SEED
+// ============================================================
+async function seed(){
+  const og = await Store.getUserByUsername(Store.ONEGRAM_USERNAME);
+  if(!og){
+    const hash = await Utils.sha256('onegram_system_password_never_login');
+    const user = {
+      id: 'onegram_official_id',
+      firstName: 'Onegram',
+      lastName: 'Official',
+      username: Store.ONEGRAM_USERNAME,
+      passwordHash: hash,
+      avatarImageId: null,
+      role: 'system',
+      isBlocked: false,
+      createdAt: Date.now()
+    };
+    await DB.put('users', user);
+  }
+  const ms = await DB.get('moderationSettings','global');
+  if(!ms){
+    await DB.put('moderationSettings',{id:'global', mode:'censor', keywords:[]});
+  }
+}
+
+// ============================================================
+// ROUTER
+// ============================================================
+const Router = {
+  routes: [],
+  add(pattern, handler){
+    // pattern like '/#/id/:username'
+    const parts = pattern.replace('/#/','').split('/');
+    this.routes.push({parts, handler});
+  },
+  match(hash){
+    const path = (hash||'#/').replace('#/','').replace(/\/$/,'');
+    const pathParts = path.split('/').filter(Boolean);
+    for(const route of this.routes){
+      const params = {};
+      const rp = route.parts.filter(Boolean);
+      if(rp.length === 0 && pathParts.length === 0) return {handler:route.handler, params};
+      if(rp.length !== pathParts.length) continue;
+      let ok = true;
+      for(let i=0;i<rp.length;i++){
+        if(rp[i].startsWith(':')){
+          params[rp[i].slice(1)] = decodeURIComponent(pathParts[i]);
+        } else if(rp[i] !== pathParts[i]){
+          ok = false; break;
+        }
+      }
+      if(ok) return {handler:route.handler, params};
+    }
+    return null;
+  },
+  async navigate(hash){
+    if(!hash.startsWith('#')) hash = '#'+hash;
+    window.location.hash = hash;
+  },
+  async handleRoute(){
+    const hash = window.location.hash || '#/';
+    const m = this.match(hash);
+    if(m){
+      await m.handler(m.params);
+    } else {
+      document.getElementById('app').innerHTML = '<div class="box" style="margin-top:20px;"><div class="box-body text-center">Страница не найдена</div></div>';
+    }
+  }
+};
+
+// ============================================================
+// LAYOUT
+// ============================================================
+async function renderLayout(contentHTML, opts={}){
+  const user = await Store.currentUser();
+  const app = document.getElementById('app');
+  const header = document.getElementById('header');
+
+  if(!user){
+    header.classList.add('hidden');
+    app.innerHTML = contentHTML;
+    return;
+  }
+
+  header.classList.remove('hidden');
+  const avatarSrc = await Store.getAvatarSrc(user);
+  const avatarImg = avatarSrc ? `<img src="${avatarSrc}">` : `<div style="width:20px;height:20px;background:#ccc;display:inline-block;"></div>`;
+
+  document.getElementById('header-nav').innerHTML = `
+    <a href="#/feed">Моя страница</a>
+    <a href="#/messages">Сообщения</a>
+    <a href="#/communities">Сообщества</a>
+  `;
+  document.getElementById('header-right').innerHTML = `
+    <a href="#/id/${user.username}" class="user-name">${Utils.sanitize(user.firstName)}</a>
+    <a href="#" id="logout-btn">Выход</a>
+  `;
+
+  // sidebar
+  const userComms = await Store.getUserCommunities(user.id);
+  let commsHTML = '';
+  for(const c of userComms.slice(0,10)){
+    if(!c.isBlocked) commsHTML += `<li><a href="#/c/${c.username}">${Utils.sanitize(c.name)}</a></li>`;
+  }
+
+  // count total unread
+  const dialogs = await Store.getDialogsForUser(user.id);
+  let totalUnread = 0;
+  for(const d of dialogs){
+    totalUnread += await Store.countUnread(d.id, user.id);
+  }
+  const unreadBadge = totalUnread > 0 ? ` (${totalUnread})` : '';
+
+  const sidebar = `
+    <div class="sidebar">
+      <div class="side-block">
+        <div class="side-block-title">Меню</div>
+        <ul>
+          <li><a href="#/id/${user.username}">Моя страница</a></li>
+          <li><a href="#/feed">Новости</a></li>
+          <li><a href="#/messages">Сообщения${unreadBadge}</a></li>
+          <li><a href="#/communities">Сообщества</a></li>
+          <li><a href="#/settings">Настройки</a></li>
+        </ul>
+      </div>
+      ${commsHTML ? `<div class="side-block"><div class="side-block-title">Мои сообщества</div><ul>${commsHTML}</ul></div>` : ''}
+    </div>
+  `;
+
+  app.innerHTML = `<div class="page-wrap">${sidebar}<div class="content">${contentHTML}</div></div>`;
+
+  document.getElementById('logout-btn')?.addEventListener('click', e=>{
+    e.preventDefault();
+    Store.logout();
+    Router.navigate('#/');
+  });
+}
+
+// ============================================================
+// AVATAR HELPER
+// ============================================================
+async function avatarHTML(user, size=36){
+  if(!user) return `<div style="width:${size}px;height:${size}px;background:#ddd;"></div>`;
+  const src = await Store.getAvatarSrc(user);
+  if(src) return `<img src="${src}" style="width:${size}px;height:${size}px;object-fit:cover;">`;
+  const letter = (user.firstName||'?')[0].toUpperCase();
+  return `<div style="width:${size}px;height:${size}px;background:#b0c4de;color:#fff;display:flex;align-items:center;justify-content:center;font-size:${Math.round(size*0.5)}px;font-weight:bold;">${letter}</div>`;
+}
+
+// ============================================================
+// POST COMPONENT
+// ============================================================
+async function renderPost(post, currentUserId){
+  let author;
+  if(post.authorType==='community'){
+    author = await DB.get('communities', post.authorId);
+    if(!author) author = {firstName:'Сообщество', lastName:'', username:'?'};
+    author.firstName = author.name || 'Сообщество';
+    author.lastName = '';
+  } else {
+    author = await DB.get('users', post.authorId);
+  }
+  if(!author) author = {firstName:'Удалённый', lastName:'пользователь', username:'?', avatarImageId:null};
+
+  const av = await avatarHTML(author, 36);
+  const liked = post.likes && post.likes.includes(currentUserId);
+
+  let imgsHTML = '';
+  if(post.imageIds && post.imageIds.length){
+    for(const imgId of post.imageIds){
+      const img = await Store.getImage(imgId);
+      if(img) imgsHTML += `<img src="${Utils.imgSrc(img)}">`;
+    }
+  }
+
+  const comments = await Store.getComments(post.id);
+  let commentsHTML = '';
+  for(const c of comments.sort((a,b)=>a.createdAt-b.createdAt)){
+    const ca = await DB.get('users', c.authorId);
+    const cname = ca ? `${ca.firstName} ${ca.lastName}` : 'Аноним';
+    commentsHTML += `<div class="comment"><span class="comment-author">${Utils.sanitize(cname)}</span> <span class="comment-text">${Utils.sanitize(c.text)}</span> <span class="comment-date">${Utils.formatDate(c.createdAt)}</span></div>`;
+  }
+
+  const profileLink = post.authorType==='community' ? `#/c/${author.username||'?'}` : `#/id/${author.username||'?'}`;
+
+  return `
+    <div class="post" data-post-id="${post.id}">
+      <div class="post-header">
+        <div class="post-avatar">${av}</div>
+        <div>
+          <a href="${profileLink}" class="post-author">${Utils.sanitize(author.firstName)} ${Utils.sanitize(author.lastName||'')}</a>
+          <div class="post-date">${Utils.formatDate(post.createdAt)}</div>
+        </div>
+      </div>
+      <div class="post-text">${Utils.sanitize(post.text)}</div>
+      ${imgsHTML ? `<div class="post-images">${imgsHTML}</div>` : ''}
+      <div class="post-actions">
+        <a class="like-btn ${liked?'liked':''}" data-post-id="${post.id}">
+          ${liked?'❤️':'♡'} ${post.likes?post.likes.length:0}
+        </a>
+        <a class="toggle-comments" data-post-id="${post.id}">💬 ${comments.length}</a>
+      </div>
+      <div class="comments-section hidden" id="comments-${post.id}">
+        ${commentsHTML}
+        <div class="comment-form">
+          <input type="text" placeholder="Комментарий..." id="comment-input-${post.id}">
+          <button class="add-comment-btn" data-post-id="${post.id}">→</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function bindPostEvents(){
+  document.querySelectorAll('.like-btn').forEach(btn=>{
+    btn.addEventListener('click', async e=>{
+      e.preventDefault();
+      const pid = btn.dataset.postId;
+      const uid = Store.currentUserId();
+      if(!uid) return;
+      await Store.toggleLike(pid, uid);
+      Router.handleRoute();
+    });
+  });
+  document.querySelectorAll('.toggle-comments').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      e.preventDefault();
+      const sec = document.getElementById('comments-'+btn.dataset.postId);
+      if(sec) sec.classList.toggle('hidden');
+    });
+  });
+  document.querySelectorAll('.add-comment-btn').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const pid = btn.dataset.postId;
+      const input = document.getElementById('comment-input-'+pid);
+      if(!input || !input.value.trim()) return;
+      const uid = Store.currentUserId();
+      if(!uid) return;
+      try{
+        await Store.addComment(pid, uid, input.value.trim());
+        Router.handleRoute();
+      }catch(err){alert(err.message);}
+    });
+  });
+}
+
+// ============================================================
+// VIEWS
+// ============================================================
+
+// HOME
+async function viewHome(){
+  const user = await Store.currentUser();
+  let extra = '';
+  if(user){
+    extra = `<button onclick="location.hash='#/feed'" style="font-size:14px;padding:8px 24px;">Перейти в ленту</button>`;
+  }
+  const html = `
+    <div class="landing">
+      <h1>Onegram</h1>
+      <p>Социальная сеть нового поколения</p>
+      <ul class="landing-features">
+        <li>Общение с друзьями в реальном времени</li>
+        <li>Удобный мессенджер с реакциями</li>
+        <li>Создавайте и вступайте в сообщества</li>
+        <li>Публикуйте посты с изображениями</li>
+        <li>Лента рекомендаций</li>
+        <li>Стена на странице профиля</li>
+        <li>Полная конфиденциальность — данные хранятся локально</li>
+      </ul>
+      <div class="landing-btns">
+        ${user ? extra : `
+          <button onclick="location.hash='#/login'">Войти</button>
+          <button onclick="location.hash='#/register'" class="btn-gray">Зарегистрироваться</button>
+        `}
+      </div>
+    </div>
+  `;
+  document.getElementById('header').classList.add('hidden');
+  document.getElementById('app').innerHTML = html;
+}
+
+// LOGIN
+async function viewLogin(){
+  const html = `
+    <div style="max-width:350px;margin:60px auto;">
+      <div class="box">
+        <div class="box-header">Вход в Onegram</div>
+        <div class="box-body">
+          <div id="login-error"></div>
+          <div class="form-row"><label>Username</label><input type="text" id="login-username"></div>
+          <div class="form-row"><label>Пароль</label><input type="password" id="login-password"></div>
+          <button id="login-btn" style="width:100%;margin-top:4px;">Войти</button>
+          <div class="mt8 text-center"><a href="#/register">Зарегистрироваться</a></div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('header').classList.add('hidden');
+  document.getElementById('app').innerHTML = html;
+
+  document.getElementById('login-btn').addEventListener('click', async ()=>{
+    const u = document.getElementById('login-username').value;
+    const p = document.getElementById('login-password').value;
+    try{
+      await Store.login(u, p);
+      Router.navigate('#/feed');
+    }catch(err){
+      document.getElementById('login-error').innerHTML = `<div class="alert-error">${Utils.sanitize(err.message)}</div>`;
+    }
+  });
+
+  document.getElementById('login-password').addEventListener('keydown', e=>{
+    if(e.key==='Enter') document.getElementById('login-btn').click();
+  });
+}
+
+// REGISTER
+async function viewRegister(){
+  const html = `
+    <div style="max-width:350px;margin:60px auto;">
+      <div class="box">
+        <div class="box-header">Регистрация в Onegram</div>
+        <div class="box-body">
+          <div id="reg-error"></div>
+          <div class="form-row"><label>Имя</label><input type="text" id="reg-first"></div>
+          <div class="form-row"><label>Фамилия</label><input type="text" id="reg-last"></div>
+          <div class="form-row"><label>Username</label><input type="text" id="reg-username" placeholder="латиница, цифры, _ (3-20)"></div>
+          <div class="form-row"><label>Пароль</label><input type="password" id="reg-password"></div>
+          <button id="reg-btn" style="width:100%;margin-top:4px;">Зарегистрироваться</button>
+          <div class="mt8 text-center"><a href="#/login">Уже есть аккаунт? Войти</a></div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('header').classList.add('hidden');
+  document.getElementById('app').innerHTML = html;
+
+  document.getElementById('reg-btn').addEventListener('click', async ()=>{
+    const f = document.getElementById('reg-first').value.trim();
+    const l = document.getElementById('reg-last').value.trim();
+    const u = document.getElementById('reg-username').value.trim();
+    const p = document.getElementById('reg-password').value;
+    if(!f||!l||!u||!p){
+      document.getElementById('reg-error').innerHTML = '<div class="alert-error">Заполните все поля</div>';
+      return;
+    }
+    try{
+      await Store.register(f, l, u, p);
+      Router.navigate('#/feed');
+    }catch(err){
+      document.getElementById('reg-error').innerHTML = `<div class="alert-error">${Utils.sanitize(err.message)}</div>`;
+    }
+  });
+
+  document.getElementById('reg-password').addEventListener('keydown', e=>{
+    if(e.key==='Enter') document.getElementById('reg-btn').click();
+  });
+}
+
+// FEED
+async function viewFeed(){
+  const user = await Store.currentUser();
+  if(!user){ Router.navigate('#/login'); return; }
+
+  const posts = await Store.getFeed(user.id);
+  let postsHTML = '';
+  for(const p of posts.slice(0, 50)){
+    postsHTML += await renderPost(p, user.id);
+  }
+
+  const html = `
+    <div class="box">
+      <div class="box-header">Новости</div>
+      <div class="box-body">
+        <div class="form-row">
+          <textarea id="feed-post-text" placeholder="Что у вас нового?" style="width:100%;"></textarea>
+        </div>
+        <div class="flex gap4 items-center">
+          <button id="feed-post-btn">Опубликовать</button>
+          <label class="btn btn-gray" style="cursor:pointer;">📎 Фото <input type="file" accept="image/*" multiple id="feed-post-images" style="display:none;"></label>
+          <span id="feed-files-count" style="color:#999;font-size:10px;"></span>
+        </div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-body">
+        ${postsHTML || '<div class="text-center" style="color:#999;">Лента пуста. Напишите первый пост!</div>'}
+      </div>
+    </div>
+  `;
+  await renderLayout(html);
+
+  let selectedFiles = [];
+  document.getElementById('feed-post-images')?.addEventListener('change', e=>{
+    selectedFiles = Array.from(e.target.files);
+    document.getElementById('feed-files-count').textContent = selectedFiles.length ? `${selectedFiles.length} файл(ов)` : '';
+  });
+
+  document.getElementById('feed-post-btn')?.addEventListener('click', async ()=>{
+    const text = document.getElementById('feed-post-text').value.trim();
+    if(!text && selectedFiles.length===0){ alert('Напишите текст или добавьте фото'); return; }
+    try{
+      const imgIds = [];
+      for(const f of selectedFiles){
+        const img = await Store.saveImage(f, 1280, 1280);
+        imgIds.push(img.id);
+      }
+      await Store.createPost('user', user.id, 'user', user.id, text||'', imgIds);
+      Router.handleRoute();
+    }catch(err){alert(err.message);}
+  });
+
+  bindPostEvents();
+}
+
+// PROFILE
+async function viewProfile(params){
+  const currentUser = await Store.currentUser();
+  if(!currentUser){ Router.navigate('#/login'); return; }
+
+  const profileUser = await Store.getUserByUsername(params.username);
+  if(!profileUser){
+    await renderLayout('<div class="box"><div class="box-body">Пользователь не найден</div></div>');
+    return;
+  }
+
+  const isOwn = profileUser.id === currentUser.id;
+  const av = await avatarHTML(profileUser, 100);
+
+  const posts = await Store.getPostsForOwner('user', profileUser.id);
+  posts.sort((a,b)=>b.createdAt-a.createdAt);
+  let postsHTML = '';
+  for(const p of posts){
+    postsHTML += await renderPost(p, currentUser.id);
+  }
+
+  const writeForm = `
+    <div class="box">
+      <div class="box-header">Написать на стену</div>
+      <div class="box-body">
+        <div class="form-row"><textarea id="wall-text" placeholder="Написать..." style="width:100%;"></textarea></div>
+        <div class="flex gap4 items-center">
+          <button id="wall-post-btn">Отправить</button>
+          <label class="btn btn-gray" style="cursor:pointer;">📎 <input type="file" accept="image/*" multiple id="wall-images" style="display:none;"></label>
+          <span id="wall-files-count" style="color:#999;font-size:10px;"></span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const avatarUpload = isOwn ? `<div class="mt4"><label class="btn btn-gray" style="cursor:pointer;font-size:10px;">Изменить фото <input type="file" accept="image/*" id="avatar-upload" style="display:none;"></label></div>` : '';
+  const msgBtn = !isOwn ? `<div class="mt4"><a href="#/messages/${profileUser.username}" class="btn" style="text-decoration:none;">✉ Написать сообщение</a></div>` : '';
+
+  const html = `
+    <div class="box">
+      <div class="profile-header">
+        <div class="profile-avatar">${av}</div>
+        <div class="profile-info">
+          <h2>${Utils.sanitize(profileUser.firstName)} ${Utils.sanitize(profileUser.lastName)}</h2>
+          <div class="username">@${Utils.sanitize(profileUser.username)}</div>
+          <div style="font-size:10px;color:#999;">На сайте с ${Utils.formatDate(profileUser.createdAt)}</div>
+          ${avatarUpload}
+          ${msgBtn}
+        </div>
+      </div>
+    </div>
+    ${writeForm}
+    <div class="box">
+      <div class="box-header">Стена</div>
+      <div class="box-body">
+        ${postsHTML || '<div style="color:#999;">Записей пока нет</div>'}
+      </div>
+    </div>
+  `;
+  await renderLayout(html);
+
+  // Avatar upload
+  document.getElementById('avatar-upload')?.addEventListener('change', async e=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    await Store.updateAvatar(file);
+    Router.handleRoute();
+  });
+
+  // Wall post
+  let wallFiles = [];
+  document.getElementById('wall-images')?.addEventListener('change', e=>{
+    wallFiles = Array.from(e.target.files);
+    document.getElementById('wall-files-count').textContent = wallFiles.length ? `${wallFiles.length} файл(ов)` : '';
+  });
+
+  document.getElementById('wall-post-btn')?.addEventListener('click', async ()=>{
+    const text = document.getElementById('wall-text').value.trim();
+    if(!text && wallFiles.length===0){ alert('Напишите текст или добавьте фото'); return; }
+    try{
+      const imgIds = [];
+      for(const f of wallFiles){ const img = await Store.saveImage(f, 1280, 1280); imgIds.push(img.id); }
+      await Store.createPost('user', currentUser.id, 'user', profileUser.id, text||'', imgIds);
+      Router.handleRoute();
+    }catch(err){alert(err.message);}
+  });
+
+  bindPostEvents();
+}
+
+// MESSAGES
+async function viewMessages(params){
+  const user = await Store.currentUser();
+  if(!user){ Router.navigate('#/login'); return; }
+
+  const targetUsername = params?.username || null;
+  let activeDialogId = null;
+  let activeOtherUser = null;
+
+  if(targetUsername){
+    const otherUser = await Store.getUserByUsername(targetUsername);
+    if(otherUser && otherUser.id !== user.id){
+      const d = await Store.findOrCreateDialog(user.id, otherUser.id);
+      activeDialogId = d.id;
+      activeOtherUser = otherUser;
+    }
+  }
+
+  const dialogs = await Store.getDialogsForUser(user.id);
+  let dialogsHTML = '';
+  for(const d of dialogs){
+    const otherId = d.userA===user.id ? d.userB : d.userA;
+    const other = await DB.get('users', otherId);
+    if(!other) continue;
+    const av = await avatarHTML(other, 36);
+    const msgs = await Store.getMessagesForDialog(d.id);
+    const last = msgs.sort((a,b)=>b.createdAt-a.createdAt)[0];
+    const unread = await Store.countUnread(d.id, user.id);
+    const isActive = d.id === activeDialogId;
+    if(!activeDialogId && !targetUsername){
+      // auto-select first
+    }
+    dialogsHTML += `
+      <div class="dialog-item ${isActive?'active':''}" data-dialog-id="${d.id}" data-other-username="${other.username}">
+        <div class="d-avatar">${av}</div>
+        <div class="d-info">
+          <div class="d-name">${Utils.sanitize(other.firstName)} ${Utils.sanitize(other.lastName)}</div>
+          <div class="d-last">${last ? Utils.sanitize(last.text).substring(0,40) : ''}</div>
+        </div>
+        <div>
+          <div class="d-time">${last ? Utils.shortDate(last.createdAt) : ''}</div>
+          ${unread ? `<div class="d-unread">${unread}</div>` : ''}
+        </div>
+      </div>
+    `;
+  }
+
+  // Chat area
+  let chatHTML = '<div class="chat-empty">Выберите диалог или начните новый</div>';
+  if(activeDialogId && activeOtherUser){
+    await Store.markRead(activeDialogId, user.id);
+    const msgs = await Store.getMessagesForDialog(activeDialogId);
+    msgs.sort((a,b)=>a.createdAt-b.createdAt);
+    let msgsHTML = '';
+    for(const m of msgs){
+      const isMine = m.fromId === user.id;
+      let imgsHTML = '';
+      if(m.imageIds && m.imageIds.length){
+        for(const imgId of m.imageIds){
+          const img = await Store.getImage(imgId);
+          if(img) imgsHTML += `<img src="${Utils.imgSrc(img)}">`;
+        }
+      }
+      // Reactions
+      let reactionsHTML = '';
+      const EMOJIS = ['👍','❤️','😂','😮','😢','😡'];
+      if(m.reactions){
+        for(const emoji in m.reactions){
+          if(m.reactions[emoji].length > 0){
+            const isMy = m.reactions[emoji].includes(user.id);
+            reactionsHTML += `<span class="r-badge ${isMy?'my':''}" data-msg-id="${m.id}" data-emoji="${emoji}">${emoji} ${m.reactions[emoji].length}</span>`;
+          }
+        }
+      }
+
+      msgsHTML += `
+        <div class="message ${isMine?'mine':''}">
+          <div class="msg-bubble">${Utils.sanitize(m.text)}${imgsHTML?`<div class="msg-images">${imgsHTML}</div>`:''}</div>
+          <div class="msg-meta">
+            ${Utils.shortDate(m.createdAt)}
+            ${m.readAtBy && m.readAtBy[activeOtherUser.id] ? ' ✓✓' : (isMine ? ' ✓' : '')}
+            <span class="msg-reaction-row">
+              <span class="reaction-trigger" data-msg-id="${m.id}">😊</span>
+            </span>
+          </div>
+          <div class="msg-reactions">${reactionsHTML}</div>
+        </div>
+      `;
+    }
+
+    chatHTML = `
+      <div class="chat-header">${Utils.sanitize(activeOtherUser.firstName)} ${Utils.sanitize(activeOtherUser.lastName)}</div>
+      <div class="chat-messages" id="chat-messages-area">${msgsHTML || '<div class="chat-empty">Начните переписку</div>'}</div>
+      <div class="chat-input">
+        <textarea id="msg-text" placeholder="Сообщение..." rows="1"></textarea>
+        <label class="attach-btn" title="Прикрепить фото">📎<input type="file" accept="image/*" multiple id="msg-images"></label>
+        <button id="send-msg-btn">→</button>
+      </div>
+    `;
+  }
+
+  const html = `
+    <div class="box">
+      <div class="box-header">Сообщения</div>
+      <div class="msg-layout">
+        <div class="msg-dialogs">
+          <div class="msg-search">
+            <input type="text" id="new-dialog-username" placeholder="Username для нового чата...">
+            <button id="start-dialog-btn" class="mt4 w100" style="font-size:10px;">Начать диалог</button>
+          </div>
+          ${dialogsHTML || '<div style="padding:10px;color:#999;font-size:10px;">Нет диалогов</div>'}
+        </div>
+        <div class="msg-chat">${chatHTML}</div>
+      </div>
+    </div>
+  `;
+  await renderLayout(html);
+
+  // Scroll to bottom
+  const chatArea = document.getElementById('chat-messages-area');
+  if(chatArea) chatArea.scrollTop = chatArea.scrollHeight;
+
+  // Dialog click
+  document.querySelectorAll('.dialog-item').forEach(item=>{
+    item.addEventListener('click', ()=>{
+      const uname = item.dataset.otherUsername;
+      Router.navigate(`#/messages/${uname}`);
+    });
+  });
+
+  // Start dialog
+  document.getElementById('start-dialog-btn')?.addEventListener('click', async ()=>{
+    const uname = document.getElementById('new-dialog-username').value.trim();
+    if(!uname){ alert('Введите username'); return; }
+    const other = await Store.getUserByUsername(uname);
+    if(!other){ alert('Пользователь не найден'); return; }
+    if(other.isBlocked){ alert('Пользователь заблокирован'); return; }
+    if(other.id===user.id){ alert('Нельзя писать самому себе'); return; }
+    Router.navigate(`#/messages/${other.username}`);
+  });
+
+  // Send message
+  let msgFiles = [];
+  document.getElementById('msg-images')?.addEventListener('change', e=>{
+    msgFiles = Array.from(e.target.files);
+  });
+
+  document.getElementById('send-msg-btn')?.addEventListener('click', async ()=>{
+    if(!activeDialogId || !activeOtherUser) return;
+    const text = document.getElementById('msg-text').value.trim();
+    if(!text && msgFiles.length===0) return;
+    try{
+      const imgIds = [];
+      for(const f of msgFiles){ const img = await Store.saveImage(f, 1024, 1024); imgIds.push(img.id); }
+      await Store.sendMessage(activeDialogId, user.id, activeOtherUser.id, text||'', imgIds);
+      msgFiles = [];
+      Router.handleRoute();
+    }catch(err){alert(err.message);}
+  });
+
+  document.getElementById('msg-text')?.addEventListener('keydown', e=>{
+    if(e.key==='Enter' && !e.shiftKey){
+      e.preventDefault();
+      document.getElementById('send-msg-btn')?.click();
+    }
+  });
+
+  // Reactions
+  let openPanel = null;
+  document.querySelectorAll('.reaction-trigger').forEach(trigger=>{
+    trigger.addEventListener('click', e=>{
+      e.stopPropagation();
+      // close existing
+      document.querySelectorAll('.reaction-panel').forEach(p=>p.remove());
+      const msgId = trigger.dataset.msgId;
+      const EMOJIS = ['👍','❤️','😂','😮','😢','😡'];
+      const panel = document.createElement('div');
+      panel.className = 'reaction-panel';
+      EMOJIS.forEach(em=>{
+        const sp = document.createElement('span');
+        sp.textContent = em;
+        sp.addEventListener('click', async ev=>{
+          ev.stopPropagation();
+          await Store.toggleReaction(msgId, user.id, em);
+          Router.handleRoute();
+        });
+        panel.appendChild(sp);
+      });
+      trigger.parentElement.appendChild(panel);
+    });
+  });
+
+  // Click on existing reaction badges
+  document.querySelectorAll('.r-badge').forEach(badge=>{
+    badge.addEventListener('click', async ()=>{
+      await Store.toggleReaction(badge.dataset.msgId, user.id, badge.dataset.emoji);
+      Router.handleRoute();
+    });
+  });
+
+  // Close reaction panels on click elsewhere
+  document.addEventListener('click', ()=>{
+    document.querySelectorAll('.reaction-panel').forEach(p=>p.remove());
+  }, {once:true});
+}
+
+// COMMUNITIES LIST
+async function viewCommunities(){
+  const user = await Store.currentUser();
+  if(!user){ Router.navigate('#/login'); return; }
+
+  const allComms = await DB.getAll('communities');
+  const myComms = await Store.getUserCommunities(user.id);
+  const myIds = new Set(myComms.map(c=>c.id));
+
+  let commsHTML = '';
+  for(const c of allComms.filter(c=>!c.isBlocked)){
+    const av = c.avatarImageId ? await Store.getImage(c.avatarImageId) : null;
+    const avImg = av ? `<img src="${Utils.imgSrc(av)}">` : `<div style="width:50px;height:50px;background:#b0c4de;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;font-weight:bold;">${(c.name||'?')[0]}</div>`;
+    const members = await Store.getCommunityMembersCount(c.id);
+    const isMember = myIds.has(c.id);
+    commsHTML += `
+      <div class="community-card">
+        <div class="community-avatar">${avImg}</div>
+        <div style="flex:1;">
+          <a href="#/c/${c.username}" class="community-name">${Utils.sanitize(c.name)}</a>
+          <div class="community-members">${members} участник(ов)</div>
+        </div>
+        <div>
+          ${isMember ? '<span style="color:#5a9e5a;font-size:10px;">✓ Вы участник</span>' : ''}
+        </div>
+      </div>
+    `;
+  }
+
+  const html = `
+    <div class="box">
+      <div class="box-header">Сообщества</div>
+      <div class="box-body">
+        <div class="flex gap4 mb8">
+          <input type="text" id="comm-search" placeholder="Поиск по названию..." style="flex:1;">
+          <button id="comm-search-btn">Найти</button>
+        </div>
+        <button id="show-create-comm" class="btn-gray mb8">+ Создать сообщество</button>
+        <div id="create-comm-form" class="hidden" style="border:1px solid #dce1e6;padding:8px;margin-bottom:8px;background:#f7f8fa;">
+          <div class="form-row"><label>Название</label><input type="text" id="comm-name"></div>
+          <div class="form-row"><label>Username</label><input type="text" id="comm-username" placeholder="латиница, цифры, _"></div>
+          <div class="form-row"><label>Аватар</label><input type="file" accept="image/*" id="comm-avatar"></div>
+          <button id="create-comm-btn">Создать</button>
+        </div>
+        <div id="comms-list">${commsHTML || '<div style="color:#999;">Сообществ пока нет</div>'}</div>
+      </div>
+    </div>
+  `;
+  await renderLayout(html);
+
+  document.getElementById('show-create-comm')?.addEventListener('click', ()=>{
+    document.getElementById('create-comm-form').classList.toggle('hidden');
+  });
+
+  document.getElementById('create-comm-btn')?.addEventListener('click', async ()=>{
+    const name = document.getElementById('comm-name').value.trim();
+    const uname = document.getElementById('comm-username').value.trim();
+    const file = document.getElementById('comm-avatar').files[0] || null;
+    if(!name || !uname){ alert('Заполните название и username'); return; }
+    try{
+      await Store.createCommunity(name, uname, file);
+      Router.handleRoute();
+    }catch(err){alert(err.message);}
+  });
+
+  document.getElementById('comm-search-btn')?.addEventListener('click', ()=>{
+    const q = document.getElementById('comm-search').value.trim().toLowerCase();
+    document.querySelectorAll('.community-card').forEach(card=>{
+      const name = card.querySelector('.community-name')?.textContent.toLowerCase()||'';
+      card.style.display = (!q || name.includes(q)) ? '' : 'none';
+    });
+  });
+
+  document.getElementById('comm-search')?.addEventListener('input', ()=>{
+    document.getElementById('comm-search-btn').click();
+  });
+}
+
+// COMMUNITY PAGE
+async function viewCommunityPage(params){
+  const user = await Store.currentUser();
+  if(!user){ Router.navigate('#/login'); return; }
+
+  const comm = await Store.getCommunityByUsername(params.communityUsername);
+  if(!comm){
+    await renderLayout('<div class="box"><div class="box-body">Сообщество не найдено</div></div>');
+    return;
+  }
+  if(comm.isBlocked){
+    await renderLayout('<div class="box"><div class="box-body"><div class="alert-error">Сообщество заблокировано</div></div></div>');
+    return;
+  }
+
+  const isMember = await Store.isMember(comm.id, user.id);
+  const isOwner = comm.ownerId === user.id;
+  const members = await Store.getCommunityMembersCount(comm.id);
+
+  const av = comm.avatarImageId ? await Store.getImage(comm.avatarImageId) : null;
+  const avImg = av ? `<img src="${Utils.imgSrc(av)}" style="width:100px;height:100px;object-fit:cover;">` :
+    `<div style="width:100px;height:100px;background:#b0c4de;display:flex;align-items:center;justify-content:center;color:#fff;font-size:40px;font-weight:bold;">${(comm.name||'?')[0]}</div>`;
+
+  const posts = await Store.getPostsForOwner('community', comm.id);
+  posts.sort((a,b)=>b.createdAt-a.createdAt);
+  let postsHTML = '';
+  for(const p of posts){
+    postsHTML += await renderPost(p, user.id);
+  }
+
+  const postForm = isMember ? `
+    <div class="box">
+      <div class="box-header">Написать в сообщество</div>
+      <div class="box-body">
+        <div class="form-row"><textarea id="comm-post-text" placeholder="Написать..." style="width:100%;"></textarea></div>
+        <div class="flex gap4 items-center">
+          <button id="comm-post-btn">Опубликовать</button>
+          <label class="btn btn-gray" style="cursor:pointer;">📎 <input type="file" accept="image/*" multiple id="comm-post-images" style="display:none;"></label>
+          <span id="comm-files-count" style="color:#999;font-size:10px;"></span>
+        </div>
+      </div>
+    </div>
+  ` : '';
+
+  const html = `
+    <div class="box">
+      <div class="profile-header">
+        <div class="profile-avatar">${avImg}</div>
+        <div class="profile-info">
+          <h2>${Utils.sanitize(comm.name)}</h2>
+          <div class="username">@${Utils.sanitize(comm.username)}</div>
+          <div style="font-size:10px;color:#999;">${members} участник(ов)</div>
+          <div class="mt4">
+            ${isMember ?
+              (isOwner ? '<span style="color:#5a9e5a;font-size:10px;">Вы — владелец</span>' :
+                `<button id="leave-comm-btn" class="btn-gray">Покинуть</button>`) :
+              `<button id="join-comm-btn">Вступить</button>`
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    ${postForm}
+    <div class="box">
+      <div class="box-header">Записи сообщества</div>
+      <div class="box-body">
+        ${postsHTML || '<div style="color:#999;">Записей пока нет</div>'}
+      </div>
+    </div>
+  `;
+  await renderLayout(html);
+
+  document.getElementById('join-comm-btn')?.addEventListener('click', async ()=>{
+    await Store.joinCommunity(comm.id, user.id);
+    Router.handleRoute();
+  });
+
+  document.getElementById('leave-comm-btn')?.addEventListener('click', async ()=>{
+    await Store.leaveCommunity(comm.id, user.id);
+    Router.handleRoute();
+  });
+
+  // Post in community
+  let commFiles = [];
+  document.getElementById('comm-post-images')?.addEventListener('change', e=>{
+    commFiles = Array.from(e.target.files);
+    document.getElementById('comm-files-count').textContent = commFiles.length ? `${commFiles.length} файл(ов)` : '';
+  });
+
+  document.getElementById('comm-post-btn')?.addEventListener('click', async ()=>{
+    const text = document.getElementById('comm-post-text').value.trim();
+    if(!text && commFiles.length===0){ alert('Напишите текст или добавьте фото'); return; }
+    try{
+      const imgIds = [];
+      for(const f of commFiles){ const img = await Store.saveImage(f, 1280, 1280); imgIds.push(img.id); }
+      await Store.createPost('user', user.id, 'community', comm.id, text||'', imgIds);
+      Router.handleRoute();
+    }catch(err){alert(err.message);}
+  });
+
+  bindPostEvents();
+}
+
+// SETTINGS
+async function viewSettings(){
+  const user = await Store.currentUser();
+  if(!user){ Router.navigate('#/login'); return; }
+
+  const html = `
+    <div class="box">
+      <div class="box-header">Настройки</div>
+      <div class="box-body">
+        <div class="form-row"><label>Имя</label><input type="text" id="set-first" value="${Utils.sanitize(user.firstName)}"></div>
+        <div class="form-row"><label>Фамилия</label><input type="text" id="set-last" value="${Utils.sanitize(user.lastName)}"></div>
+        <div id="set-msg"></div>
+        <button id="save-settings-btn">Сохранить</button>
+      </div>
+    </div>
+  `;
+  await renderLayout(html);
+
+  document.getElementById('save-settings-btn')?.addEventListener('click', async ()=>{
+    const f = document.getElementById('set-first').value.trim();
+    const l = document.getElementById('set-last').value.trim();
+    if(!f || !l){ alert('Заполните имя и фамилию'); return; }
+    user.firstName = f;
+    user.lastName = l;
+    await DB.put('users', user);
+    document.getElementById('set-msg').innerHTML = '<div class="alert-success">Сохранено</div>';
+  });
+}
+
+// ADMIN
+async function viewAdmin(){
+  const ADMIN_PASSWORD = '0XPZ17jiZ3DR2AIg';
+  const isAdmin = sessionStorage.getItem('adminSession') === 'true';
+
+  if(!isAdmin){
+    const html = `
+      <div style="max-width:350px;margin:60px auto;">
+        <div class="box">
+          <div class="box-header">Администрирование Onegram</div>
+          <div class="box-body">
+            <div id="admin-error"></div>
+            <div class="form-row"><label>Пароль администратора</label><input type="password" id="admin-pass"></div>
+            <button id="admin-login-btn" style="width:100%;">Войти</button>
+          </div>
+        </div>
+      </div>
+    `;
+    document.getElementById('header').classList.remove('hidden');
+    document.getElementById('app').innerHTML = html;
+
+    document.getElementById('admin-login-btn').addEventListener('click', ()=>{
+      const p = document.getElementById('admin-pass').value;
+      if(p === ADMIN_PASSWORD){
+        sessionStorage.setItem('adminSession','true');
+        Router.handleRoute();
+      } else {
+        document.getElementById('admin-error').innerHTML = '<div class="alert-error">Неверный пароль</div>';
+      }
+    });
+    document.getElementById('admin-pass').addEventListener('keydown', e=>{
+      if(e.key==='Enter') document.getElementById('admin-login-btn').click();
+    });
+    return;
+  }
+
+  // Admin panel
+  const users = await DB.getAll('users');
+  const modSettings = await Store.getModerationSettings();
+
+  let usersTable = '';
+  for(const u of users.sort((a,b)=>a.createdAt-b.createdAt)){
+    usersTable += `<tr>
+      <td>${Utils.sanitize(u.firstName)} ${Utils.sanitize(u.lastName)}</td>
+      <td>${Utils.sanitize(u.username)}</td>
+      <td>${u.role}</td>
+      <td>${Utils.formatDate(u.createdAt)}</td>
+      <td>${u.isBlocked ? '<span style="color:red;">Заблокирован</span>' : '<span style="color:green;">Активен</span>'}</td>
+    </tr>`;
+  }
+
+  let keywordsHTML = '';
+  (modSettings.keywords||[]).forEach((kw,i)=>{
+    keywordsHTML += `<span class="keyword-tag">${Utils.sanitize(kw)} <span class="kw-remove" data-idx="${i}">×</span></span>`;
+  });
+
+  const html = `
+    <div class="box">
+      <div class="box-header">Админ-панель Onegram <span style="float:right;"><a href="#" id="admin-logout-btn" style="color:#c00;">Выйти из админки</a></span></div>
+      <div class="box-body">
+
+        <div class="admin-section">
+          <h3 style="margin-bottom:6px;font-size:12px;">Пользователи (${users.length})</h3>
+          <div class="mb4"><input type="text" id="admin-user-search" placeholder="Поиск по username..." style="width:200px;"></div>
+          <table class="admin-table" id="admin-users-table">
+            <tr><th>Имя</th><th>Username</th><th>Роль</th><th>Регистрация</th><th>Статус</th></tr>
+            ${usersTable}
+          </table>
+        </div>
+
+        <div class="admin-section">
+          <h3 style="margin-bottom:6px;font-size:12px;">Блокировка пользователя</h3>
+          <div class="flex gap4 items-center">
+            <input type="text" id="block-user-username" placeholder="username">
+            <button id="block-user-btn" class="btn-red">Заблокировать</button>
+            <button id="unblock-user-btn" class="btn-green">Разблокировать</button>
+          </div>
+          <div id="block-user-msg" class="mt4"></div>
+        </div>
+
+        <div class="admin-section">
+          <h3 style="margin-bottom:6px;font-size:12px;">Блокировка сообщества</h3>
+          <div class="flex gap4 items-center">
+            <input type="text" id="block-comm-username" placeholder="username сообщества">
+            <button id="block-comm-btn" class="btn-red">Заблокировать</button>
+            <button id="unblock-comm-btn" class="btn-green">Разблокировать</button>
+          </div>
+          <div id="block-comm-msg" class="mt4"></div>
+        </div>
+
+        <div class="admin-section">
+          <h3 style="margin-bottom:6px;font-size:12px;">Модерация сообщений — ключевые слова</h3>
+          <div class="mb4">
+            <label>Режим: </label>
+            <select id="mod-mode">
+              <option value="ban" ${modSettings.mode==='ban'?'selected':''}>Ban (блокировка отправки)</option>
+              <option value="censor" ${modSettings.mode==='censor'?'selected':''}>Censor (замена на ***)</option>
+            </select>
+            <button id="mod-mode-btn" class="ml4">Сохранить режим</button>
+          </div>
+          <div class="mb4">
+            <div>Текущие слова:</div>
+            <div id="keywords-list">${keywordsHTML || '<span style="color:#999;">Нет ключевых слов</span>'}</div>
+          </div>
+          <div class="flex gap4 items-center">
+            <input type="text" id="add-keyword-input" placeholder="Новое слово">
+            <button id="add-keyword-btn">Добавить</button>
+          </div>
+        </div>
+
+        <div class="admin-section">
+          <h3 style="margin-bottom:6px;font-size:12px;">Рассылка от Onegram (для всех)</h3>
+          <div class="form-row"><textarea id="broadcast-text" placeholder="Текст рассылки..." style="width:100%;"></textarea></div>
+          <button id="broadcast-btn">Отправить всем</button>
+          <div id="broadcast-msg" class="mt4"></div>
+        </div>
+
+      </div>
+    </div>
+  `;
+
+  const currentUserAdmin = await Store.currentUser();
+  if(currentUserAdmin){
+    await renderLayout(html);
+  } else {
+    document.getElementById('header').classList.add('hidden');
+    document.getElementById('app').innerHTML = `<div style="width:960px;margin:0 auto;padding-top:46px;">${html}</div>`;
+  }
+
+  // Admin logout
+  document.getElementById('admin-logout-btn')?.addEventListener('click', e=>{
+    e.preventDefault();
+    sessionStorage.removeItem('adminSession');
+    Router.navigate('#/');
+  });
+
+  // User search
+  document.getElementById('admin-user-search')?.addEventListener('input', e=>{
+    const q = e.target.value.toLowerCase();
+    const rows = document.querySelectorAll('#admin-users-table tr');
+    rows.forEach((r,i)=>{
+      if(i===0) return; // header
+      const uname = r.cells[1]?.textContent.toLowerCase()||'';
+      r.style.display = (!q || uname.includes(q)) ? '' : 'none';
+    });
+  });
+
+  // Block user
+  document.getElementById('block-user-btn')?.addEventListener('click', async ()=>{
+    const uname = document.getElementById('block-user-username').value.trim();
+    const u = await Store.getUserByUsername(uname);
+    if(!u){ document.getElementById('block-user-msg').innerHTML='<div class="alert-error">Пользователь не найден</div>'; return; }
+    if(u.role==='system'){ document.getElementById('block-user-msg').innerHTML='<div class="alert-error">Нельзя блокировать системный аккаунт</div>'; return; }
+    u.isBlocked = true;
+    await DB.put('users', u);
+    document.getElementById('block-user-msg').innerHTML='<div class="alert-success">Пользователь заблокирован</div>';
+    setTimeout(()=>Router.handleRoute(), 500);
+  });
+
+  document.getElementById('unblock-user-btn')?.addEventListener('click', async ()=>{
+    const uname = document.getElementById('block-user-username').value.trim();
+    const u = await Store.getUserByUsername(uname);
+    if(!u){ document.getElementById('block-user-msg').innerHTML='<div class="alert-error">Пользователь не найден</div>'; return; }
+    u.isBlocked = false;
+    await DB.put('users', u);
+    document.getElementById('block-user-msg').innerHTML='<div class="alert-success">Пользователь разблокирован</div>';
+    setTimeout(()=>Router.handleRoute(), 500);
+  });
+
+  // Block community
+  document.getElementById('block-comm-btn')?.addEventListener('click', async ()=>{
+    const uname = document.getElementById('block-comm-username').value.trim();
+    const c = await Store.getCommunityByUsername(uname);
+    if(!c){ document.getElementById('block-comm-msg').innerHTML='<div class="alert-error">Сообщество не найдено</div>'; return; }
+    c.isBlocked = true;
+    await DB.put('communities', c);
+    document.getElementById('block-comm-msg').innerHTML='<div class="alert-success">Сообщество заблокировано</div>';
+  });
+
+  document.getElementById('unblock-comm-btn')?.addEventListener('click', async ()=>{
+    const uname = document.getElementById('block-comm-username').value.trim();
+    const c = await Store.getCommunityByUsername(uname);
+    if(!c){ document.getElementById('block-comm-msg').innerHTML='<div class="alert-error">Сообщество не найдено</div>'; return; }
+    c.isBlocked = false;
+    await DB.put('communities', c);
+    document.getElementById('block-comm-msg').innerHTML='<div class="alert-success">Сообщество разблокировано</div>';
+  });
+
+  // Moderation mode
+  document.getElementById('mod-mode-btn')?.addEventListener('click', async ()=>{
+    const ms = await Store.getModerationSettings();
+    ms.mode = document.getElementById('mod-mode').value;
+    await DB.put('moderationSettings', ms);
+    Router.handleRoute();
+  });
+
+  // Add keyword
+  document.getElementById('add-keyword-btn')?.addEventListener('click', async ()=>{
+    const kw = document.getElementById('add-keyword-input').value.trim();
+    if(!kw) return;
+    const ms = await Store.getModerationSettings();
+    if(!ms.keywords.includes(kw.toLowerCase())){
+      ms.keywords.push(kw.toLowerCase());
+      await DB.put('moderationSettings', ms);
+    }
+    Router.handleRoute();
+  });
+
+  // Remove keyword
+  document.querySelectorAll('.kw-remove').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const idx = parseInt(btn.dataset.idx);
+      const ms = await Store.getModerationSettings();
+      ms.keywords.splice(idx, 1);
+      await DB.put('moderationSettings', ms);
+      Router.handleRoute();
+    });
+  });
+
+  // Broadcast
+  document.getElementById('broadcast-btn')?.addEventListener('click', async ()=>{
+    const text = document.getElementById('broadcast-text').value.trim();
+    if(!text){ alert('Введите текст рассылки'); return; }
+    try{
+      const count = await Store.broadcastMessage(text);
+      document.getElementById('broadcast-msg').innerHTML = `<div class="alert-success">Отправлено ${count} пользователям</div>`;
+      document.getElementById('broadcast-text').value = '';
+    }catch(err){
+      document.getElementById('broadcast-msg').innerHTML = `<div class="alert-error">${Utils.sanitize(err.message)}</div>`;
+    }
+  });
+}
+
+// ============================================================
+// ROUTES SETUP
+// ============================================================
+Router.add('/#/', viewHome);
+Router.add('/#/login', viewLogin);
+Router.add('/#/register', viewRegister);
+Router.add('/#/feed', viewFeed);
+Router.add('/#/id/:username', viewProfile);
+Router.add('/#/messages', viewMessages);
+Router.add('/#/messages/:username', (p)=>viewMessages(p));
+Router.add('/#/communities', viewCommunities);
+Router.add('/#/c/:communityUsername', viewCommunityPage);
+Router.add('/#/admin', viewAdmin);
+Router.add('/#/settings', viewSettings);
+
+// ============================================================
+// INIT
+// ============================================================
+async function init(){
+  await DB.open();
+  await seed();
+  window.addEventListener('hashchange', ()=>Router.handleRoute());
+  await Router.handleRoute();
+}
+
+init().catch(console.error);
+</script>
 </body>
 </html>
